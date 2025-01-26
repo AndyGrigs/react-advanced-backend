@@ -13,7 +13,7 @@ import { register, login, getMe } from './controllers/userController.js';
 import * as postController from './controllers/postController.js'
 import handleValidationErrors from './utils/handleValidationErrors.js'
 
-mongoose.connect('mongodb://andrewgrigs88:Ty3n8ZL3B1nkCI67@cluster0/?ssl=true&replicaSet=atlas-5vr42u-shard-0&authSource=admin&retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect(process.env.MONGO_URL)
         .then(()=>{
             console.log('db works')
         }).catch((err)=>{

@@ -13,7 +13,7 @@ import { register, login, getMe } from './controllers/userController.js';
 import * as postController from './controllers/postController.js'
 import handleValidationErrors from './utils/handleValidationErrors.js'
 
-mongoose.connect('')
+mongoose.connect('mongodb://andrewgrigs88:Ty3n8ZL3B1nkCI67@cluster0/?ssl=true&replicaSet=atlas-5vr42u-shard-0&authSource=admin&retryWrites=true&w=majority&appName=Cluster0')
         .then(()=>{
             console.log('db works')
         }).catch((err)=>{
@@ -23,25 +23,9 @@ mongoose.connect('')
 
 const app = express();
 
-const storage = multer.diskStorage({
-    destination: (_, __, callback) => {
-        callback(null, 'uploads')
-    },
-    filename: (_, file, callback) =>{
-        callback(null, file.originalname)
-    }
-})
-
-const upload = multer({ storage })
-
 app.use(express.json())
-app.use('/uploads', express.static('uploads'))
 app.use(cors())
-app.post('/upload', checkAuth, upload.single('image'), (req, res) =>{
-    res.json({
-        url: `/upload/${req.file.originalname}`
-    })
-})
+
 
 app.post('/auth/login',loginValidation, handleValidationErrors, login);
 app.post('/auth/register',registerValidation, handleValidationErrors, register)
